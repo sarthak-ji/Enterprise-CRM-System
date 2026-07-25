@@ -1,0 +1,332 @@
+# CRM Design System — Reference Guide
+
+A modern, professional SaaS design system for the Enterprise CRM, built on **Tailwind CSS v4** with config-in-CSS tokens, full dark-mode support, and a consistent component vocabulary.
+
+> **Source of truth:** [src/assets/styles/index.css](src/assets/styles/index.css) · [src/design-system/tokens.js](src/design-system/tokens.js)
+
+---
+
+## 1. Philosophy
+
+| Principle | How it's applied |
+|---|---|
+| **Token-first** | All design values live in `@theme` as CSS variables. No magic numbers in components. |
+| **Dark-mode native** | Tokens automatically remap under the `.dark` class — components use semantic names, never raw colors. |
+| **Composable** | All primitives use `class` strings (`ds-btn`, `ds-card`, `ds-badge-brand`) — combine with Tailwind utilities. |
+| **Accessible** | Universal focus ring, semantic naming, WCAG-AA contrast across both themes. |
+| **Performant** | Transitions target only `transform`/`opacity`/`box-shadow`; respects `prefers-reduced-motion` via Tailwind defaults. |
+
+---
+
+## 2. Color Palette
+
+### Brand — Indigo
+The primary action color. Use for **primary buttons**, active states, and brand identity.
+
+| Token | Hex | Usage |
+|---|---|---|
+| `brand-50` | `#eef2ff` | Subtle backgrounds, badge fills |
+| `brand-100` | `#e0e7ff` | Hover backgrounds |
+| `brand-500` | `#6366f1` | Brand identity, focus ring |
+| `brand-600` | `#4f46e5` | **Primary buttons** |
+| `brand-700` | `#4338ca` | Primary button hover |
+
+### Accent — Cyan
+Secondary highlights, data viz, gradient pairings.
+
+### Neutrals (semantic)
+| Token | Light | Dark | Usage |
+|---|---|---|---|
+| `surface` | `#ffffff` | `#0b1020` | Page-level background |
+| `surface-muted` | `#f9fafb` | `#0f152a` | App background |
+| `surface-raised` | `#ffffff` | `#131a35` | Card / panel background |
+| `surface-sunken` | `#f3f4f6` | `#0a0f1f` | Subtle insets, table hover |
+| `border` | `#e5e7eb` | `#1f2a44` | Default borders |
+| `border-strong` | `#d1d5db` | `#2a3756` | Hover borders |
+
+### Text
+| Token | Light | Dark |
+|---|---|---|
+| `text-primary` | `#0f172a` | `#f1f5f9` |
+| `text-secondary` | `#475569` | `#cbd5e1` |
+| `text-muted` | `#64748b` | `#94a3b8` |
+| `text-inverse` | `#ffffff` | `#0f172a` |
+
+### Semantic Status
+| Token | 50 | 500 | 600 | 700 |
+|---|---|---|---|---|
+| **success** | `#ecfdf5` | `#10b981` | `#059669` | `#047857` |
+| **warning** | `#fffbeb` | `#f59e0b` | `#d97706` | `#b45309` |
+| **danger** | `#fef2f2` | `#ef4444` | `#dc2626` | `#b91c1c` |
+| **info** | `#eff6ff` | `#3b82f6` | `#2563eb` | `#1d4ed8` |
+
+---
+
+## 3. Typography
+
+| Token | Size | Use for |
+|---|---|---|
+| `text-xs` | 12px | Badges, helper text |
+| `text-sm` | 14px | **Body text (default)** |
+| `text-base` | 16px | Long-form content |
+| `text-lg` | 18px | Sub-headings, large body |
+| `text-xl` | 20px | Card titles |
+| `text-2xl` | 24px | Page sections |
+| `text-3xl` | 30px | **Page titles (h1)** |
+
+- **Font family:** `Inter` (with system fallbacks)
+- **Mono:** `JetBrains Mono`
+- **Line heights:** `tight` (1.25), `snug` (1.375), `normal` (1.5), `relaxed` (1.625)
+- **Headings** (h1–h4) are pre-typed via `@layer base` with tight letter-spacing.
+
+---
+
+## 4. Spacing Scale (4px base)
+
+| Token | px | Common use |
+|---|---|---|
+| `1` | 4 | Icon-to-text gap |
+| `2` | 8 | Inline spacing |
+| `3` | 12 | Form field gap |
+| `4` | 16 | **Card body padding** |
+| `5` | 20 | Card header padding |
+| `6` | 24 | **Page section gap** |
+| `8` | 32 | Page padding |
+| `10` | 40 | Hero spacing |
+| `12` | 48 | Top-level sections |
+| `16` | 64 | Marketing/empty states |
+
+---
+
+## 5. Border Radius
+
+| Class | Value | Use for |
+|---|---|---|
+| `rounded-xs` | 4px | Checkboxes, tags |
+| `rounded-sm` | 6px | Dense UI |
+| `rounded-md` | 8px | **Buttons, inputs** |
+| `rounded-lg` | 12px | Large buttons |
+| `rounded-xl` | 16px | Modals |
+| `rounded-card` | 14px | **All cards (signature)** |
+| `rounded-2xl` | 20px | Marketing surfaces |
+| `rounded-pill` | 9999px | **Badges, tags** |
+
+---
+
+## 6. Shadows
+
+| Class | Recipe | Use for |
+|---|---|---|
+| `shadow-xs` | `0 1px 2px / 0.04` | Subtle lift |
+| `shadow-sm` | 2-layer soft | Buttons (rest) |
+| `shadow-md` | 2-layer medium | Buttons (hover) |
+| `shadow-lg` | 2-layer lifted | Cards (hover) |
+| `shadow-xl` | 2-layer large | Modals, popovers |
+| `shadow-2xl` | 1-layer heavy | Hero elements |
+| `shadow-ring` | `0 0 0 4px / 0.15` | **Focus ring** |
+| `shadow-card` | Tight 2-layer | **Default card** |
+| `shadow-glow` | Brand-tinted | Gradient buttons hover |
+
+---
+
+## 7. Buttons
+
+```html
+<!-- Primary CTA -->
+<button class="ds-btn ds-btn-md ds-btn-primary">Create Deal</button>
+
+<!-- Secondary -->
+<button class="ds-btn ds-btn-md ds-btn-secondary">Cancel</button>
+
+<!-- Ghost (low-emphasis action) -->
+<button class="ds-btn ds-btn-md ds-btn-ghost">Learn more</button>
+
+<!-- Danger (destructive) -->
+<button class="ds-btn ds-btn-md ds-btn-danger">Delete</button>
+
+<!-- Outline (alt brand) -->
+<button class="ds-btn ds-btn-md ds-btn-outline">Export</button>
+
+<!-- Gradient (hero / marketing) -->
+<button class="ds-btn ds-btn-lg ds-btn-gradient">Get Started</button>
+```
+
+### Sizes
+
+| Class | Height | Padding | Font |
+|---|---|---|---|
+| `ds-btn-sm` | 32px | 0 12px | 12px |
+| `ds-btn-md` | 40px | 0 16px | 14px |
+| `ds-btn-lg` | 48px | 0 24px | 16px |
+| `ds-btn-icon-sm` | 32×32 | — | 12px |
+| `ds-btn-icon-md` | 40×40 | — | 14px |
+
+**States:** default · hover (color + shadow) · active (`scale(0.97)`) · disabled (50% opacity) · focus-visible (ring).
+
+---
+
+## 8. Cards
+
+```html
+<div class="ds-card ds-card-hover">
+  <div class="ds-card-header">
+    <h3>Recent Deals</h3>
+  </div>
+  <div class="ds-card-body">…</div>
+  <div class="ds-card-footer">…</div>
+</div>
+```
+
+- `ds-card` — base (border, radius, shadow, transition)
+- `ds-card-hover` — adds lift-on-hover
+- `ds-card-header` · `ds-card-body` · `ds-card-footer` — semantic sub-areas
+
+---
+
+## 9. Inputs
+
+```html
+<label class="ds-label">Email</label>
+<input class="ds-input" type="email" placeholder="you@company.com" />
+<p class="ds-helper">We never share your email.</p>
+
+<!-- With error -->
+<input class="ds-input ds-input-error" />
+<p class="ds-error">Email is required</p>
+```
+
+- `ds-input` — base styles + focus ring + hover border
+- `ds-input-error` — danger border + red ring
+- `ds-label` · `ds-helper` · `ds-error` — text wrappers
+
+---
+
+## 10. Tables
+
+```html
+<div class="ds-table-wrapper">
+  <table class="ds-table">
+    <thead>
+      <tr><th>Name</th><th>Status</th><th>Amount</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Acme Corp</td><td><span class="ds-badge ds-badge-success">Active</span></td><td>$12,400</td></tr>
+    </tbody>
+  </table>
+</div>
+```
+
+- Wrapper gives the border + radius + shadow
+- `thead` is automatically muted/uppercase
+- Rows animate on hover
+
+---
+
+## 11. Badges & Status
+
+### Tones
+
+```html
+<span class="ds-badge ds-badge-brand">   New        </span>
+<span class="ds-badge ds-badge-success"> Active     </span>
+<span class="ds-badge ds-badge-warning"> Pending    </span>
+<span class="ds-badge ds-badge-danger">  Failed     </span>
+<span class="ds-badge ds-badge-info">    In Review  </span>
+<span class="ds-badge ds-badge-neutral"> Draft      </span>
+```
+
+### Status Dots (CRM Pipeline)
+
+```html
+<span class="ds-status-dot ds-status-active"></span>   Active lead
+<span class="ds-status-dot ds-status-pending"></span>  Awaiting reply
+<span class="ds-status-dot ds-status-inactive"></span> Archived
+<span class="ds-status-dot ds-status-error"></span>    Overdue
+```
+
+Use a JS map to bind pipeline stages → tones:
+
+```js
+// src/design-system/tokens.js
+export const statusMap = {
+  new:         { tone: 'brand',   dot: 'ds-status-active' },
+  qualified:   { tone: 'success', dot: 'ds-status-active' },
+  negotiation: { tone: 'warning', dot: 'ds-status-pending' },
+  lost:        { tone: 'danger',  dot: 'ds-status-error' },
+};
+```
+
+---
+
+## 12. Hover & Transition Utilities
+
+| Class | Effect |
+|---|---|
+| `ds-hover-lift` | `translateY(-2px)` + larger shadow on hover |
+| `ds-hover-glow` | Brand-tinted glow on hover |
+| `ds-press` | `scale(0.97)` on `:active` |
+| `ds-link` | Brand color + underline on hover |
+
+All transitions use the smooth easing (`cubic-bezier(0.4, 0, 0.2, 1)`) at `200ms` by default.
+
+### Motion tokens
+
+| Token | Value |
+|---|---|
+| `--duration-fast` | 120ms |
+| `--duration-normal` | 200ms |
+| `--duration-slow` | 320ms |
+| `--ease-smooth` | `cubic-bezier(0.4, 0, 0.2, 1)` |
+| `--ease-spring` | `cubic-bezier(0.34, 1.56, 0.64, 1)` |
+
+### Animation utilities
+
+| Class | Effect |
+|---|---|
+| `animate-fade-in` | Fade in |
+| `animate-slide-up` | 8px up + spring ease |
+| `animate-slide-down` | 8px down + spring ease |
+| `animate-scale-in` | Scale 0.96 → 1 + spring ease |
+| `animate-pulse-soft` | 2s soft pulse (notifications) |
+| `ds-shimmer` | Loading skeleton |
+
+---
+
+## 13. Import Cheatsheet
+
+```js
+// Class combiner (handles Tailwind conflicts)
+import { cn } from '@/utils/cn.js';
+
+// Design tokens (for JS/Framer/Recharts)
+import { colors, statusMap, radius, shadow, motion } from '@/design-system';
+
+// All-in-one
+import { cn, colors, statusMap } from '@/design-system';
+```
+
+---
+
+## 14. Accessibility Checklist
+
+- [x] All interactive elements have a focus ring (`--shadow-ring`)
+- [x] Color contrast ≥ 4.5:1 for body text in both themes
+- [x] Disabled state communicated by both opacity **and** `cursor: not-allowed`
+- [x] Hit targets ≥ 40px on all buttons (`ds-btn-md` and up)
+- [x] Selection colors themed per mode
+- [x] Scrollbars don't take layout space
+
+---
+
+## 15. Do's and Don'ts
+
+✅ **Do**
+- Use semantic tokens (`bg-surface`, `text-muted`) over raw colors (`bg-white`, `text-gray-500`)
+- Combine `ds-*` classes with Tailwind utilities for one-off adjustments
+- Use the `cn()` helper for conditional classes
+
+❌ **Don't**
+- Hardcode hex values in component code
+- Use raw `bg-blue-500` — pick a semantic token or use the brand palette
+- Bypass the focus ring with `outline: none` without a replacement
+- Mix multiple badge tones on the same row of data
